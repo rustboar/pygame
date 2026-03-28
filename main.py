@@ -1,7 +1,7 @@
-from turtle import Screen
-
 import pygame
 
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 from constants import SCREEN_HEIGHT, SCREEN_WIDTH
 from logger import log_state
 from player import Player
@@ -15,9 +15,16 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
     dt = 0
+
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
+
     Player.containers = (updatable, drawable)
+    Asteroid.containers = (updatable, drawable, asteroids)
+    AsteroidField.containers = (updatable,)
+    AsteroidField()
+
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     # the actual game
     while True:
@@ -29,13 +36,11 @@ def main():
         dt = clock.tick(60) / 1000
         # updates game state
         updatable.update(dt)
-        # renders updated game state
+        # renders game state
+        screen.fill("black")
         for i in drawable:
             i.draw(screen)
 
-        # renders black screen, then player, need up to look upwhat ".flip" does
-        screen.fill("black")
-        player.draw(screen)
         pygame.display.flip()
 
 
