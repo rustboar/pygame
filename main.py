@@ -1,3 +1,5 @@
+from turtle import Screen
+
 import pygame
 
 from constants import SCREEN_HEIGHT, SCREEN_WIDTH
@@ -13,9 +15,10 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
     dt = 0
-    x = SCREEN_WIDTH / 2
-    y = SCREEN_HEIGHT / 2
-    real_player = Player(x, y)
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    Player.containers = (updatable, drawable)
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     # the actual game
     while True:
         log_state()
@@ -24,9 +27,15 @@ def main():
                 return
         # sets fps to 60
         dt = clock.tick(60) / 1000
+        # updates game state
+        updatable.update(dt)
+        # renders updated game state
+        for i in drawable:
+            i.draw(screen)
 
+        # renders black screen, then player, need up to look upwhat ".flip" does
         screen.fill("black")
-        real_player.draw(screen)
+        player.draw(screen)
         pygame.display.flip()
 
 
