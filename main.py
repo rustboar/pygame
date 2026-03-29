@@ -6,6 +6,7 @@ import pygame
 
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from border import border
 from constants import SCREEN_HEIGHT, SCREEN_WIDTH
 from logger import log_event, log_state
 from player import Player
@@ -40,6 +41,8 @@ def main():
         dt = clock.tick(60) / 1000
         # updates game state
         updatable.update(dt)
+        # draws background
+        screen.fill("black")
         # collision check
         for aster in asteroids:
             if aster.collides_with(player):
@@ -57,8 +60,9 @@ def main():
                     aster.split()
                     i.kill()
                     score += 1
-        # renders game state
-        screen.fill("black")
+        # renders border
+        pygame.draw.rect(screen, (0, 0, 255), border, width=2, border_radius=0)
+        # renders updates to the  game state
         for i in drawable:
             i.draw(screen)
 
