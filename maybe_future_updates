@@ -7,7 +7,8 @@ scoring is added, is displayed in terminal after game ends
 multiple lives and respawning is added
 Add an explosion effect for the asteroids
 Add acceleration to the player movement
-Make the objects wrap around the screen instead of disappearing
+---Make the objects wrap around the screen instead of disappearing
+when player exits map the are warped to other side of map
 Add a background image
 Create different weapon types
 Make the asteroids lumpy instead of perfectly round

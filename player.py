@@ -8,6 +8,8 @@ from constants import (
     PLAYER_SHOOT_SPEED,
     PLAYER_SPEED,
     PLAYER_TURN_SPEED,
+    SCREEN_HEIGHT,
+    SCREEN_WIDTH,
 )
 from shot import Shot
 
@@ -33,8 +35,8 @@ class Player(CircleShape):
         self.rotation += PLAYER_TURN_SPEED * dt
 
     def update(self, dt):
+        # movement
         keys = pygame.key.get_pressed()
-
         if keys[pygame.K_a]:
             self.rotate(-dt)
         if keys[pygame.K_d]:
@@ -45,7 +47,20 @@ class Player(CircleShape):
             self.move(-dt)
         if keys[pygame.K_SPACE]:
             self.shoot()
+
+        # firerate
         self.shot_timer -= dt
+
+        # warps player to other side of map
+        if self.position.x > SCREEN_WIDTH:
+            self.position = 0
+        elif self.position.x < 0:
+            self.position.x = SCREEN_WIDTH
+
+        if self.position.y > SCREEN_HEIGHT:
+            self.position.y = 0
+        elif self.position.y < 0:
+            self.position.y = SCREEN_HEIGHT
 
     def move(self, dt):
         unit_vector = pygame.Vector2(0, 1)
