@@ -16,6 +16,7 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
     score = 0
+    PLAYER_LIVES = 2
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
@@ -40,11 +41,14 @@ def main():
         # collision check
         for aster in asteroids:
             if aster.collides_with(player):
+                if PLAYER_LIVES == 0:
+                    log_event("player_died")
+                    print(f"Your score was {score}")
+                    print("Game over!")
+                    sys.exit()
                 log_event("player_hit")
-                print(f"Your score was {score}")
-                print("Game over!")
-                sys.exit()
-
+                PLAYER_LIVES -= 1
+                player.position = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
             for i in shot:
                 if aster.collides_with(i):
                     log_event("asteroid_shot")
