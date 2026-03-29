@@ -50,7 +50,7 @@ def main():
             for i in shot:
                 if aster.collides_with(i):
                     log_event("asteroid_shot")
-                    aster.kill()
+                    aster.split()
                     i.kill()
 
         # renders game state
